@@ -22,7 +22,7 @@ public class Mapping {
     public VehicleEntity convertToEntity(VehicleDTO dto){
         return modelMapper.map(dto, VehicleEntity.class);
     }
-    public List<VehicleDTO> convertToDTO(List<VehicleEntity> vehicles){
+    public List<VehicleDTO> convertVehicleToDTOList(List<VehicleEntity> vehicles){
         return modelMapper.map(vehicles, new TypeToken<List<VehicleDTO>>(){}.getType());
     }
 }

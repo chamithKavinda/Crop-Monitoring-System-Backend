@@ -2,12 +2,15 @@ package org.example.cropmonitoringsystem.service.impl;
 
 import org.example.cropmonitoringsystem.dao.VehicleDao;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
+import org.example.cropmonitoringsystem.entity.VehicleEntity;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.service.VehicleService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VehicleServiceIMPL implements VehicleService {
@@ -30,4 +33,11 @@ public class VehicleServiceIMPL implements VehicleService {
             throw new DataPersistFailedException("Cannot save vehicle");
         }
     }
+
+    @Override
+    public List<VehicleDTO> getAllVehicles() {
+        List<VehicleEntity> getAllVehicles = vehicleDao.findAll();
+        return mapping.convertVehicleToDTOList(getAllVehicles);
+    }
+
 }
