@@ -17,9 +17,8 @@ public class VehicleEntity implements SuperEntity{
     private String vehicleCategory;
     private String fuelType;
     private String status;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffId", nullable = false)
     private StaffEntity staff;
     private String remarks;
-
 }

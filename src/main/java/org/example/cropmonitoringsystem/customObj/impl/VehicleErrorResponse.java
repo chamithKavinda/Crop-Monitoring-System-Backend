@@ -11,4 +11,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class VehicleErrorResponse implements VehicleResponse, Serializable {
+    private int errorCode;
+    private String errorMessage;
 }
