@@ -1,5 +1,7 @@
 package org.example.cropmonitoringsystem.service.impl;
 
+import org.example.cropmonitoringsystem.customObj.VehicleResponse;
+import org.example.cropmonitoringsystem.customObj.impl.VehicleErrorResponse;
 import org.example.cropmonitoringsystem.dao.VehicleDao;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.entity.VehicleEntity;
@@ -38,6 +40,16 @@ public class VehicleServiceIMPL implements VehicleService {
     public List<VehicleDTO> getAllVehicles() {
         List<VehicleEntity> getAllVehicles = vehicleDao.findAll();
         return mapping.convertVehicleToDTOList(getAllVehicles);
+    }
+
+    @Override
+    public VehicleResponse getSelectedVehicle(String vehicleCode) {
+        if (vehicleDao.existsById(vehicleCode)){
+            VehicleEntity vehicleEntityByVehicleCode = vehicleDao.getReferenceById(vehicleCode);
+            return (VehicleResponse) mapping.convertToVehicleDTO(vehicleEntityByVehicleCode);
+        }else {
+            return new VehicleErrorResponse(0,"Vehicle not Found");
+        }
     }
 
 }

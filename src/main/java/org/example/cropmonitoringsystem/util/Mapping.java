@@ -16,7 +16,7 @@ public class Mapping {
     private ModelMapper modelMapper;
 
     //VehicleEntity and DTO
-    public VehicleDTO convertToDTO(VehicleDTO vehicle){
+    public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle){
         return modelMapper.map(vehicle, VehicleDTO.class);
     }
     public VehicleEntity convertToEntity(VehicleDTO dto){

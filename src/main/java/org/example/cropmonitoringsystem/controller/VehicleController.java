@@ -1,6 +1,7 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cropmonitoringsystem.customObj.VehicleResponse;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.service.VehicleService;
@@ -37,6 +38,11 @@ public class VehicleController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDTO> getAllVehicles(){
         return vehicleService.getAllVehicles();
+    }
+
+    @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public VehicleResponse getSelectedVehicle(@PathVariable("vehicleCode") String vehicleCode){
+        return vehicleService.getSelectedVehicle(vehicleCode);
     }
 
 }
