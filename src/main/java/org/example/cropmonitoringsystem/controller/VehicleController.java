@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.VehicleResponse;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.VehicleNotFound;
 import org.example.cropmonitoringsystem.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,4 +46,17 @@ public class VehicleController {
         return vehicleService.getSelectedVehicle(vehicleCode);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleCode") String vehicleCode, @RequestBody VehicleDTO vehicle){
+        try{
+            if (vehicle == null && (vehicleCode == null || vehicle.equals(""))){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            vehicleService.updateVehicle(vehicleCode,vehicle);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (VehicleNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

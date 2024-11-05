@@ -6,6 +6,7 @@ import org.example.cropmonitoringsystem.dao.VehicleDao;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.entity.VehicleEntity;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.VehicleNotFound;
 import org.example.cropmonitoringsystem.service.VehicleService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleServiceIMPL implements VehicleService {
@@ -51,5 +53,25 @@ public class VehicleServiceIMPL implements VehicleService {
             return new VehicleErrorResponse(0,"Vehicle not Found");
         }
     }
+
+    @Override
+    public void updateVehicle(String vehicleCode, VehicleDTO incomevehicleDTO) {
+        Optional<VehicleEntity> tmpVehicleEntity = vehicleDao.findById(vehicleCode);
+
+        if (!tmpVehicleEntity.isPresent()) {
+            throw new VehicleNotFound("Vehicle not found");
+        } else {
+            VehicleEntity vehicleEntity = tmpVehicleEntity.get();
+
+            vehicleEntity.setVehicleCategory(incomevehicleDTO.getVehicleCategory());
+            vehicleEntity.setFuelType(incomevehicleDTO.getFuelType());
+            vehicleEntity.setLicensePlateNumber(incomevehicleDTO.getLicensePlateNumber());
+            vehicleEntity.setStatus(incomevehicleDTO.getStatus());
+            vehicleEntity.setRemarks(incomevehicleDTO.getRemarks());
+
+            vehicleDao.save(vehicleEntity);
+        }
+    }
+
 
 }
