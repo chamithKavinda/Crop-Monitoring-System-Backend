@@ -1,5 +1,9 @@
 package org.example.cropmonitoringsystem.service.impl;
 
+import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
+import org.example.cropmonitoringsystem.customObj.VehicleResponse;
+import org.example.cropmonitoringsystem.customObj.impl.EquipmentErrorResponse;
+import org.example.cropmonitoringsystem.customObj.impl.VehicleErrorResponse;
 import org.example.cropmonitoringsystem.dao.EquipmentDao;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
 import org.example.cropmonitoringsystem.entity.EquipmentEntity;
@@ -34,5 +38,15 @@ public class EquipmentServiceIMPL implements EquipmentService {
     public List<EquipmentDTO> getAllEquipments() {
         List<EquipmentEntity> getAllEquipments = equipmentDao.findAll();
         return mapping.convertEquipmentToDTOList(getAllEquipments);
+    }
+
+    @Override
+    public EquipmentResponse getSelectedEquipment(String equipmentId) {
+        if (equipmentDao.existsById(equipmentId)){
+            EquipmentEntity equipmentEntityByEquipmentId = equipmentDao.getReferenceById(equipmentId);
+            return (EquipmentResponse) mapping.convertToEquipmentDTO(equipmentEntityByEquipmentId);
+        }else {
+            return new EquipmentErrorResponse(0,"Equipment not Found");
+        }
     }
 }
