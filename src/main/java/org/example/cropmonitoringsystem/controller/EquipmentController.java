@@ -6,7 +6,6 @@ import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
-import org.example.cropmonitoringsystem.exception.VehicleNotFound;
 import org.example.cropmonitoringsystem.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
