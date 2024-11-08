@@ -1,7 +1,9 @@
 package org.example.cropmonitoringsystem.util;
 
+import org.example.cropmonitoringsystem.dto.impl.CropDTO;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
+import org.example.cropmonitoringsystem.entity.CropEntity;
 import org.example.cropmonitoringsystem.entity.EquipmentEntity;
 import org.example.cropmonitoringsystem.entity.VehicleEntity;
 import org.modelmapper.ModelMapper;
@@ -29,13 +31,16 @@ public class Mapping {
     }
 
     //Equipment and DTO
-    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment){
-        return modelMapper.map(equipment, EquipmentDTO.class);
-    }
-    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto){
-        return modelMapper.map(dto, EquipmentEntity.class);
-    }
+    public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment){return modelMapper.map(equipment, EquipmentDTO.class);}
+    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto){return modelMapper.map(dto, EquipmentEntity.class);}
     public List<EquipmentDTO> convertEquipmentToDTOList(List<EquipmentEntity> equipment){
         return modelMapper.map(equipment, new TypeToken<List<EquipmentDTO>>(){}.getType());
+    }
+
+    //Crop and DTO
+    public CropDTO convertToCropDTO(CropEntity crop){return modelMapper.map(crop, CropDTO.class);}
+    public CropEntity convertToCropEntity(CropDTO dto){return modelMapper.map(dto, CropEntity.class);}
+    public List<CropDTO> convertCropToDTOList(List<CropEntity> crop){
+        return modelMapper.map(crop, new TypeToken<List<CropDTO>>(){}.getType());
     }
 }
