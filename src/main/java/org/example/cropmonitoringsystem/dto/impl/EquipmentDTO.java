@@ -1,3 +1,4 @@
+
 package org.example.cropmonitoringsystem.dto.impl;
 
 import lombok.AllArgsConstructor;

@@ -9,4 +9,5 @@ public interface EquipmentService {
     void saveEquipment(EquipmentDTO equipmentDTO);
     List<EquipmentDTO> getAllEquipments();
     EquipmentResponse getSelectedEquipment(String equipmentId);
+    void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO);
 }

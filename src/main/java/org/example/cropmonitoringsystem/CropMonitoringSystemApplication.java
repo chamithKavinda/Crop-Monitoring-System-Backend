@@ -14,6 +14,7 @@ public class CropMonitoringSystemApplication {
 
 	@Bean
 	public ModelMapper modelMapper() {
+
 		return new ModelMapper();
 	}
 }

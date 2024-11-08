@@ -21,7 +21,7 @@ public class Mapping {
     public VehicleDTO convertToVehicleDTO(VehicleEntity vehicle){
         return modelMapper.map(vehicle, VehicleDTO.class);
     }
-    public VehicleEntity convertToEntity(VehicleDTO dto){
+    public VehicleEntity convertToVehicleEntity(VehicleDTO dto){
         return modelMapper.map(dto, VehicleEntity.class);
     }
     public List<VehicleDTO> convertVehicleToDTOList(List<VehicleEntity> vehicles){
@@ -32,7 +32,7 @@ public class Mapping {
     public EquipmentDTO convertToEquipmentDTO(EquipmentEntity equipment){
         return modelMapper.map(equipment, EquipmentDTO.class);
     }
-    public EquipmentEntity convertToEntity(EquipmentDTO dto){
+    public EquipmentEntity convertToEquipmentEntity(EquipmentDTO dto){
         return modelMapper.map(dto, EquipmentEntity.class);
     }
     public List<EquipmentDTO> convertEquipmentToDTOList(List<EquipmentEntity> equipment){
