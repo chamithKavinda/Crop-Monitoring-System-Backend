@@ -28,7 +28,7 @@ public class VehicleServiceIMPL implements VehicleService {
         System.out.println("1");
         vehicleDTO.setVehicleCode(AppUtil.createVehicleCode());
         System.out.println("2");
-        var vehicleEntity = mapping.convertToEntity(vehicleDTO);
+        var vehicleEntity = mapping.convertToVehicleEntity(vehicleDTO);
         System.out.println("3");
         var savedVehicle = vehicleDao.save(vehicleEntity);
         System.out.println("4");
