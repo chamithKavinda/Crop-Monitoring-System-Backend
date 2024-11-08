@@ -1,6 +1,7 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cropmonitoringsystem.customObj.CropResponse;
 import org.example.cropmonitoringsystem.dto.impl.CropDTO;
 import org.example.cropmonitoringsystem.exception.CropNotFound;
 import org.example.cropmonitoringsystem.service.CropService;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -56,6 +56,9 @@ public class CropController {
         return cropService.getAllCrops();
     }
 
-
+    @GetMapping(value = "/{cropCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CropResponse getSelectedCrop(@PathVariable("cropCode") String cropCode){
+        return cropService.getSelectedCrop(cropCode);
+    }
 
 }

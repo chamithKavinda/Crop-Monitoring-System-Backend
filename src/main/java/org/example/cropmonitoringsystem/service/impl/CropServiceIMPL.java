@@ -1,5 +1,8 @@
 package org.example.cropmonitoringsystem.service.impl;
 
+import org.example.cropmonitoringsystem.customObj.CropResponse;
+import org.example.cropmonitoringsystem.customObj.impl.CropErrorResponse;
+import org.example.cropmonitoringsystem.customObj.impl.EquipmentErrorResponse;
 import org.example.cropmonitoringsystem.dao.CropDao;
 import org.example.cropmonitoringsystem.dto.impl.CropDTO;
 import org.example.cropmonitoringsystem.entity.CropEntity;
@@ -34,5 +37,15 @@ public class CropServiceIMPL implements CropService {
     public List<CropDTO> getAllCrops() {
         List<CropEntity> getAllCrops = cropDao.findAll();
         return mapping.convertCropToDTOList(getAllCrops);
+    }
+
+    @Override
+    public CropResponse getSelectedCrop(String cropCode) {
+        if (cropDao.existsById(cropCode)) {
+            CropEntity cropEntityByCropCode = cropDao.getReferenceById(cropCode);
+            return mapping.convertToCropDTO(cropEntityByCropCode);
+        } else {
+            return new CropErrorResponse(0, "Crop not Found");
+        }
     }
 }
