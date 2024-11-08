@@ -72,4 +72,14 @@ public class EquipmentServiceIMPL implements EquipmentService {
         }
     }
 
+    @Override
+    public void deleteEquipment(String equipmentId) {
+        Optional<EquipmentEntity> findId = equipmentDao.findById(equipmentId);
+        if (!findId.isPresent()){
+            throw new EquipmentNotFound("Equipment not Found");
+        }else {
+            equipmentDao.deleteById(equipmentId);
+        }
+    }
+
 }

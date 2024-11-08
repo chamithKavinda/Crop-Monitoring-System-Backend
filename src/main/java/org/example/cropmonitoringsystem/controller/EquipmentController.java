@@ -4,7 +4,6 @@ package org.example.cropmonitoringsystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
-import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.VehicleNotFound;
@@ -61,6 +60,18 @@ public class EquipmentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (EquipmentNotFound e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/{equipmentId}")
+    public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId){
+        try{
+            equipmentService.deleteEquipment(equipmentId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (EquipmentNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
