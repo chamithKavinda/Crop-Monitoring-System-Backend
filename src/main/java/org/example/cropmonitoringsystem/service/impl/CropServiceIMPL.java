@@ -5,7 +5,9 @@ import org.example.cropmonitoringsystem.customObj.impl.CropErrorResponse;
 import org.example.cropmonitoringsystem.dao.CropDao;
 import org.example.cropmonitoringsystem.dto.impl.CropDTO;
 import org.example.cropmonitoringsystem.entity.CropEntity;
+import org.example.cropmonitoringsystem.entity.EquipmentEntity;
 import org.example.cropmonitoringsystem.exception.CropNotFound;
+import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.service.CropService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
@@ -64,6 +66,16 @@ public class CropServiceIMPL implements CropService {
 
             // Save the updated entity
             cropDao.save(cropEntity);  // This line ensures the entity is saved to the database
+        }
+    }
+
+    @Override
+    public void deleteCrop(String cropCode) {
+        Optional<CropEntity> findId = cropDao.findById(cropCode);
+        if (!findId.isPresent()){
+            throw new CropNotFound("Crop not Found");
+        }else {
+            cropDao.deleteById(cropCode);
         }
     }
 }
