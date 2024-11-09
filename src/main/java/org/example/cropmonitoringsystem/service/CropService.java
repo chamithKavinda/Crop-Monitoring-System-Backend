@@ -9,4 +9,5 @@ public interface CropService {
     void saveCrop(CropDTO cropDTO);
     List<CropDTO> getAllCrops();
     CropResponse getSelectedCrop(String cropCode);
+    void updateCrop(CropDTO updateCropDTO);
 }

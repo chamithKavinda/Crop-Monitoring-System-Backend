@@ -61,4 +61,46 @@ public class CropController {
         return cropService.getSelectedCrop(cropCode);
     }
 
+    @PatchMapping(value = "/{cropCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateCrop(
+            @PathVariable("cropCode") String cropCode,
+            @RequestPart("updateCropCommonName") String updateCropCommonName,
+            @RequestPart("updateCropScientificName") String updateCropScientificName,
+            @RequestPart(value = "updateCropImage", required = false) MultipartFile updateCropImage,
+            @RequestPart("updateCategory") String updateCategory,
+            @RequestPart("updateCropSeason") String updateCropSeason,
+            @RequestPart("updateFieldCode") String updateFieldCode
+    ) {
+        try {
+            // Convert the crop image to Base64 if provided
+            String updateBase64CropImage = null;
+            if (updateCropImage != null && !updateCropImage.isEmpty()) {
+                updateBase64CropImage = AppUtil.toBase64CropImage(updateCropImage);
+            }
+
+            // Create DTO and set the updated values
+            var updateCropDTO = new CropDTO();
+            updateCropDTO.setCropCode(cropCode);
+            updateCropDTO.setCropCommonName(updateCropCommonName);
+            updateCropDTO.setCropScientificName(updateCropScientificName);
+            updateCropDTO.setCategory(updateCategory);
+            updateCropDTO.setCropSeason(updateCropSeason);
+            updateCropDTO.setFieldCode(updateFieldCode);
+
+            // If the image is provided, update the crop image
+            if (updateBase64CropImage != null) {
+                updateCropDTO.setCropImage(updateBase64CropImage);
+            }
+
+            // Call service to update the crop
+            cropService.updateCrop(updateCropDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (CropNotFound e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
