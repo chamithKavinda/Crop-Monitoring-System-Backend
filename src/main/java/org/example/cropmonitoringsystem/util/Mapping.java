@@ -2,9 +2,11 @@ package org.example.cropmonitoringsystem.util;
 
 import org.example.cropmonitoringsystem.dto.impl.CropDTO;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
+import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
 import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.entity.CropEntity;
 import org.example.cropmonitoringsystem.entity.EquipmentEntity;
+import org.example.cropmonitoringsystem.entity.FieldEntity;
 import org.example.cropmonitoringsystem.entity.VehicleEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -42,5 +44,12 @@ public class Mapping {
     public CropEntity convertToCropEntity(CropDTO dto){return modelMapper.map(dto, CropEntity.class);}
     public List<CropDTO> convertCropToDTOList(List<CropEntity> crop){
         return modelMapper.map(crop, new TypeToken<List<CropDTO>>(){}.getType());
+    }
+
+    //Field and DTO
+    public FieldDTO convertToFieldDTO(FieldEntity field){return modelMapper.map(field, FieldDTO.class);}
+    public FieldEntity convertToFieldEntity(FieldDTO dto){return modelMapper.map(dto, FieldEntity.class);}
+    public List<FieldDTO> convertFieldToDTOList(List<FieldEntity> field){
+        return modelMapper.map(field, new TypeToken<List<FieldDTO>>(){}.getType());
     }
 }
