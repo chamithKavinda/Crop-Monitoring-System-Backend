@@ -1,21 +1,17 @@
 package org.example.cropmonitoringsystem.service.impl;
 
+import org.example.cropmonitoringsystem.customObj.FieldResponse;
+import org.example.cropmonitoringsystem.customObj.impl.FieldErrorResponse;
 import org.example.cropmonitoringsystem.dao.FieldDao;
 import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
-import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
 import org.example.cropmonitoringsystem.entity.FieldEntity;
-import org.example.cropmonitoringsystem.entity.StaffEntity;
-import org.example.cropmonitoringsystem.exception.FieldNotFound;
 import org.example.cropmonitoringsystem.service.FieldService;
-import org.example.cropmonitoringsystem.service.StaffService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FieldServiceIMPL implements FieldService {
@@ -38,5 +34,15 @@ public class FieldServiceIMPL implements FieldService {
     public List<FieldDTO> getAllFields() {
         List<FieldEntity> getAllFields = fieldDao.findAll();
         return mapping.convertFieldToDTOList(getAllFields);
+    }
+
+    @Override
+    public FieldResponse getSelectedField(String fieldCode) {
+        if (fieldDao.existsById(fieldCode)) {
+            FieldEntity fieldEntityByFieldCode = fieldDao.getReferenceById(fieldCode);
+            return mapping.convertToFieldDTO(fieldEntityByFieldCode);
+        } else {
+            return new FieldErrorResponse(0, "Field not Found");
+        }
     }
 }

@@ -1,11 +1,10 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cropmonitoringsystem.customObj.FieldResponse;
 import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
-import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
 import org.example.cropmonitoringsystem.exception.FieldNotFound;
 import org.example.cropmonitoringsystem.service.FieldService;
-import org.example.cropmonitoringsystem.service.StaffService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
@@ -15,10 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("api/v1/field")
@@ -60,4 +57,10 @@ public class FieldController {
     public List<FieldDTO> getAllFields(){
         return fieldService.getAllFields();
     }
+
+    @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldResponse getSelectedField(@PathVariable("fieldCode") String fieldCode){
+        return fieldService.getSelectedField(fieldCode);
+    }
 }
+
