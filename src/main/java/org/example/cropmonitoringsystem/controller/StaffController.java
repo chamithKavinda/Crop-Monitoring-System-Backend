@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.StaffResponse;
 import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.StaffNotFound;
 import org.example.cropmonitoringsystem.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,5 +45,19 @@ public class StaffController {
     @GetMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffResponse getSelectedStaff(@PathVariable("staffId") String staffId){
         return staffService.getSelectedStaff(staffId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{staffId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateStaff(@PathVariable("staffId") String staffId, @RequestBody StaffDTO staff){
+        try{
+            if (staff == null && (staffId == null || staff.equals(""))){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            staffService.updateStaff(staffId,staff);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (StaffNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
