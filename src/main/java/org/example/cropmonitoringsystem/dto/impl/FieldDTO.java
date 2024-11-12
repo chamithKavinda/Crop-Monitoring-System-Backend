@@ -1,17 +1,17 @@
 package org.example.cropmonitoringsystem.dto.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.cropmonitoringsystem.customObj.FieldResponse;
 import org.example.cropmonitoringsystem.dto.SuperDTO;
 import org.springframework.data.geo.Point;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class FieldDTO implements SuperDTO, FieldResponse {
     private String fieldCode;
     private String fieldName;
@@ -21,4 +21,5 @@ public class FieldDTO implements SuperDTO, FieldResponse {
     private List<StaffDTO> staff;
     private String fieldImage1;
     private String fieldImage2;
+
 }
