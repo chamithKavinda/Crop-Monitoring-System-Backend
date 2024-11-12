@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.StaffResponse;
 import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
-import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.StaffNotFound;
 import org.example.cropmonitoringsystem.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;

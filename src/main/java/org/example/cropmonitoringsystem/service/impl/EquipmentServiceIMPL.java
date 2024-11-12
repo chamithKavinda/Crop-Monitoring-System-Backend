@@ -1,18 +1,14 @@
 package org.example.cropmonitoringsystem.service.impl;
 
 import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
-import org.example.cropmonitoringsystem.customObj.VehicleResponse;
 import org.example.cropmonitoringsystem.customObj.impl.EquipmentErrorResponse;
-import org.example.cropmonitoringsystem.customObj.impl.VehicleErrorResponse;
 import org.example.cropmonitoringsystem.dao.EquipmentDao;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
 import org.example.cropmonitoringsystem.entity.EquipmentEntity;
-import org.example.cropmonitoringsystem.entity.VehicleEntity;
 import org.example.cropmonitoringsystem.enums.Status;
 import org.example.cropmonitoringsystem.enums.Type;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
-import org.example.cropmonitoringsystem.exception.VehicleNotFound;
 import org.example.cropmonitoringsystem.service.EquipmentService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
