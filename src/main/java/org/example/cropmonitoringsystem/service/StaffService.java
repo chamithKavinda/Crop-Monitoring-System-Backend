@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StaffService {
     void saveStaff(StaffDTO staffDTO);
+    List<StaffDTO> getAllStaffs();
 }

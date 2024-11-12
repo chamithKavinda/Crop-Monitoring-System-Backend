@@ -2,6 +2,7 @@ package org.example.cropmonitoringsystem.service.impl;
 
 import org.example.cropmonitoringsystem.dao.StaffDao;
 import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
+import org.example.cropmonitoringsystem.entity.EquipmentEntity;
 import org.example.cropmonitoringsystem.entity.StaffEntity;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.service.StaffService;
@@ -27,5 +28,11 @@ public class StaffServiceIMPL implements StaffService {
         if (savedStaff == null){
             throw new DataPersistFailedException("Cannot save Staff");
         }
+    }
+
+    @Override
+    public List<StaffDTO> getAllStaffs() {
+        List<StaffEntity> getAllStaffs = staffDao.findAll();
+        return mapping.convertStaffToDTOList(getAllStaffs);
     }
 }
