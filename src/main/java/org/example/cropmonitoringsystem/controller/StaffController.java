@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.StaffResponse;
 import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.StaffNotFound;
 import org.example.cropmonitoringsystem.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,18 @@ public class StaffController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (StaffNotFound e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/{staffId}")
+    public ResponseEntity<Void> deleteStaff(@PathVariable("staffId") String staffId){
+        try{
+            staffService.deleteStaff(staffId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (StaffNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
