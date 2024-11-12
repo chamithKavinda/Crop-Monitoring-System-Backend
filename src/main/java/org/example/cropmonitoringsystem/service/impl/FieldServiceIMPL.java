@@ -33,4 +33,10 @@ public class FieldServiceIMPL implements FieldService {
         }
         fieldDao.save(fieldEntity);
     }
+
+    @Override
+    public List<FieldDTO> getAllFields() {
+        List<FieldEntity> getAllFields = fieldDao.findAll();
+        return mapping.convertFieldToDTOList(getAllFields);
+    }
 }
