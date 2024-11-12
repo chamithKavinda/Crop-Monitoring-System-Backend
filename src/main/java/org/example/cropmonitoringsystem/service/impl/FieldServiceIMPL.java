@@ -4,7 +4,9 @@ import org.example.cropmonitoringsystem.customObj.FieldResponse;
 import org.example.cropmonitoringsystem.customObj.impl.FieldErrorResponse;
 import org.example.cropmonitoringsystem.dao.FieldDao;
 import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
+import org.example.cropmonitoringsystem.entity.CropEntity;
 import org.example.cropmonitoringsystem.entity.FieldEntity;
+import org.example.cropmonitoringsystem.exception.CropNotFound;
 import org.example.cropmonitoringsystem.exception.FieldNotFound;
 import org.example.cropmonitoringsystem.service.FieldService;
 import org.example.cropmonitoringsystem.util.AppUtil;
@@ -62,6 +64,16 @@ public class FieldServiceIMPL implements FieldService {
             fieldEntity.setFieldImage1(updateFieldDTO.getFieldImage2());
 
             fieldDao.save(fieldEntity);
+        }
+    }
+
+    @Override
+    public void deleteField(String fieldCode) {
+        Optional<FieldEntity> findId = fieldDao.findById(fieldCode);
+        if (!findId.isPresent()){
+            throw new FieldNotFound("Field not Found");
+        }else {
+            fieldDao.deleteById(fieldCode);
         }
     }
 }
