@@ -62,5 +62,54 @@ public class FieldController {
     public FieldResponse getSelectedField(@PathVariable("fieldCode") String fieldCode){
         return fieldService.getSelectedField(fieldCode);
     }
+
+    @PatchMapping(value = "/{fieldCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateField(
+            @PathVariable("fieldCode") String fieldCode,
+            @RequestPart("fieldName") String fieldName,
+            @RequestPart("latitude") String latitude,
+            @RequestPart("longitude") String longitude,
+            @RequestPart("extentSize") String extentSize,
+            @RequestPart("fieldImage1") MultipartFile fieldImage1,
+            @RequestPart("fieldImage2") MultipartFile fieldImage2
+    ){
+        try{
+            String updateBase64FieldImage1 = null;
+            String updateBase64FieldImage2 = null;
+
+            if (fieldImage1 != null && !fieldImage1.isEmpty()){
+                updateBase64FieldImage1 = AppUtil.toBase64FieldImage1(fieldImage1);
+            }
+
+            if (fieldImage2 != null && !fieldImage2.isEmpty()){
+                updateBase64FieldImage2 = AppUtil.toBase64FieldImage2(fieldImage2);
+            }
+
+            var updateFieldDTO = new FieldDTO();
+            updateFieldDTO.setFieldCode(fieldCode);
+            updateFieldDTO.setFieldName(fieldName);
+            updateFieldDTO.setFieldLocation(new Point(Double.parseDouble(latitude), Double.parseDouble(longitude)));
+            updateFieldDTO.setExtendSize(Double.parseDouble(extentSize));
+
+            if (updateBase64FieldImage1 != null){
+                updateFieldDTO.setFieldImage1(updateBase64FieldImage1);
+            }
+
+            if (updateBase64FieldImage2 != null){
+                updateFieldDTO.setFieldImage2(updateBase64FieldImage2);
+            }
+
+            fieldService.updateField(updateFieldDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (FieldNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 }
 

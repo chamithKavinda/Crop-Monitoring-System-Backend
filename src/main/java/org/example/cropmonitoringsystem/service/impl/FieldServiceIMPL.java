@@ -5,6 +5,7 @@ import org.example.cropmonitoringsystem.customObj.impl.FieldErrorResponse;
 import org.example.cropmonitoringsystem.dao.FieldDao;
 import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
 import org.example.cropmonitoringsystem.entity.FieldEntity;
+import org.example.cropmonitoringsystem.exception.FieldNotFound;
 import org.example.cropmonitoringsystem.service.FieldService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.example.cropmonitoringsystem.util.Mapping;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FieldServiceIMPL implements FieldService {
@@ -43,6 +45,23 @@ public class FieldServiceIMPL implements FieldService {
             return mapping.convertToFieldDTO(fieldEntityByFieldCode);
         } else {
             return new FieldErrorResponse(0, "Field not Found");
+        }
+    }
+
+    @Override
+    public void updateField(FieldDTO updateFieldDTO) {
+        Optional<FieldEntity> tmpField = fieldDao.findById(updateFieldDTO.getFieldCode());
+        if (!tmpField.isPresent()){
+            throw new FieldNotFound("Field not Found");
+        } else {
+            FieldEntity fieldEntity = tmpField.get();
+            fieldEntity.setFieldName(updateFieldDTO.getFieldName());
+            fieldEntity.setFieldLocation(updateFieldDTO.getFieldLocation());
+            fieldEntity.setExtendSize(updateFieldDTO.getExtendSize());
+            fieldEntity.setFieldImage1(updateFieldDTO.getFieldImage1());
+            fieldEntity.setFieldImage1(updateFieldDTO.getFieldImage2());
+
+            fieldDao.save(fieldEntity);
         }
     }
 }

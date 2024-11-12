@@ -9,4 +9,5 @@ public interface FieldService {
     void saveField(FieldDTO fieldDTO);
     List<FieldDTO> getAllFields();
     FieldResponse getSelectedField(String fieldCode);
+    void updateField(FieldDTO updateFieldDTO);
 }
