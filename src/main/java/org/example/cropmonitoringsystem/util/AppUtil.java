@@ -11,6 +11,7 @@ public class AppUtil {
     public static String createEquipmentId(){return "Equipment-"+ UUID.randomUUID();}
     public static String createCropId(){return "Crop-"+ UUID.randomUUID();}
     public static String createFieldId(){return "Field-"+ UUID.randomUUID();}
+    public static String createStaffId(){return "Staff-"+ UUID.randomUUID();}
 
     public static String toBase64CropImage(MultipartFile cropImage) throws IOException {
         if (cropImage == null || cropImage.isEmpty()) {
