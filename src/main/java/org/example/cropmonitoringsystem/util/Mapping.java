@@ -65,8 +65,9 @@ public class Mapping {
     public List<StaffDTO> convertStaffToDTOList(List<StaffDTO> staffEntities) {
         return modelMapper.map(staffEntities, new TypeToken<List<StaffDTO>>(){}.getType());
     }
+
     // Generic mapping method
-    public <D> D map(Object source, Class<D> destinationClass) {
-        return modelMapper.map(source, destinationClass);
-    }
+//    public <D> D map(Object source, Class<D> destinationClass) {
+//        return modelMapper.map(source, destinationClass);
+//    }
 }
