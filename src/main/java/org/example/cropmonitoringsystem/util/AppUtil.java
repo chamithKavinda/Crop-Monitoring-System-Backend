@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 public class AppUtil {
@@ -12,6 +13,7 @@ public class AppUtil {
     public static String createCropId(){return "Crop-"+ UUID.randomUUID();}
     public static String createFieldId(){return "Field-"+ UUID.randomUUID();}
     public static String createStaffId(){return "Staff-"+ UUID.randomUUID();}
+    public static String createLogCode(){return "Log-" + UUID.randomUUID();}
 
     public static String toBase64CropImage(MultipartFile cropImage) throws IOException {
         if (cropImage == null || cropImage.isEmpty()) {
@@ -33,6 +35,18 @@ public class AppUtil {
         }
         return Base64.getEncoder().encodeToString(fieldImage2.getBytes());
     }
+
+    public static String toBase64ObservedImage(MultipartFile observedImage) {
+        try {
+            if (observedImage == null || observedImage.isEmpty()) {
+                return "";
+            }
+            return Base64.getEncoder().encodeToString(observedImage.getBytes());
+        } catch (IOException e) {
+            return "";  // Or handle in another way (e.g., throw custom exception)
+        }
+    }
+
 
 
 }
