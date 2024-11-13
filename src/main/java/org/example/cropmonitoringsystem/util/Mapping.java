@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
 @Component
 public class Mapping {
     @Autowired
@@ -66,8 +65,10 @@ public class Mapping {
         return modelMapper.map(staffEntities, new TypeToken<List<StaffDTO>>(){}.getType());
     }
 
-    // Generic mapping method
-//    public <D> D map(Object source, Class<D> destinationClass) {
-//        return modelMapper.map(source, destinationClass);
-//    }
+    //CropDetails and DTO
+    public CropDetailsDTO convertToCropDetailsDTO(CropDetailsEntity cropDetailsEntity) {return modelMapper.map(cropDetailsEntity, CropDetailsDTO.class);}
+    public CropDetailsEntity convertToCropDetailsEntity(CropDetailsDTO cropDetailsDTO) {return modelMapper.map(cropDetailsDTO, CropDetailsEntity.class);}
+    public List<CropDetailsDTO> convertCropDetailsToDTOList(List<CropDetailsEntity> cropDetailsEntities) {
+        return modelMapper.map(cropDetailsEntities, new TypeToken<List<CropDetailsDTO>>(){}.getType());
+    }
 }
