@@ -47,7 +47,11 @@ public class Mapping {
 
     // Field and DTO
     public FieldDTO convertToFieldDTO(FieldEntity fieldEntity) {
-        return modelMapper.map(fieldEntity, FieldDTO.class);
+        FieldDTO dto = modelMapper.map(fieldEntity, FieldDTO.class);
+        dto.setStaffIds(fieldEntity.getStaff() != null
+                ? fieldEntity.getStaff().stream().map(StaffEntity::getStaffId).collect(Collectors.toList())
+                : Collections.emptyList());
+        return dto;
     }
     public FieldEntity convertToFieldEntity(FieldDTO fieldDTO) {
         return modelMapper.map(fieldDTO, FieldEntity.class);

@@ -21,5 +21,5 @@ public class FieldDTO implements SuperDTO, FieldResponse {
     private List<StaffDTO> staff;
     private String fieldImage1;
     private String fieldImage2;
-
+    private List<String> staffIds;
 }
