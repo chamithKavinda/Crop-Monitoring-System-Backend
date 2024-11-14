@@ -1,7 +1,8 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
+import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
+import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.service.UserService;
@@ -39,5 +40,10 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserResponse getSelectedUser(@PathVariable("email") String email){
+        return userService.getSelectedUser(email);
     }
 }
