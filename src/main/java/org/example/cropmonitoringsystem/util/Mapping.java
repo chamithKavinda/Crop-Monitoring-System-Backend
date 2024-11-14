@@ -89,10 +89,15 @@ public class Mapping {
 
         return dto;
     }
-
     public CropDetailsEntity convertToCropDetailsEntity(CropDetailsDTO cropDetailsDTO) {return modelMapper.map(cropDetailsDTO, CropDetailsEntity.class);}
     public List<CropDetailsDTO> convertCropDetailsToDTOList(List<CropDetailsEntity> cropDetailsEntities) {
         return cropDetailsEntities.stream().map(this::convertToCropDetailsDTO).collect(Collectors.toList());
     }
 
+    //User and DTO
+    public UserDTO convertToUserDTO(UserEntity user){return modelMapper.map(user, UserDTO.class);}
+    public UserEntity convertToUserEntity(UserDTO dto){return modelMapper.map(dto, UserEntity.class);}
+    public List<UserDTO> convertUserToDTOList(List<UserEntity> user){
+        return modelMapper.map(user, new TypeToken<List<UserDTO>>(){}.getType());
+    }
 }
