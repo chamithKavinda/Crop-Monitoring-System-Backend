@@ -9,4 +9,5 @@ public interface CropDetailsService {
     void saveCropDetails(CropDetailsDTO cropDetailsDTO);
     List<CropDetailsDTO> getAllCropDetails();
     CropDetailsResponse getSelectedCropDetail(String logCode);
+    void updateCropDetails(CropDetailsDTO updatecropDetailsDTO);
 }

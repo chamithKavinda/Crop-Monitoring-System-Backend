@@ -62,4 +62,35 @@ public class CropDetailsController {
     public CropDetailsResponse getSelectedCropDetail(@PathVariable("logCode") String logCode){
         return cropDetailsService.getSelectedCropDetail(logCode);
     }
+
+    @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateCropDetails(
+            @PathVariable("logCode") String logCode,
+            @RequestPart("logDetails") String logDetails,
+            @RequestPart("observedImage") MultipartFile observedImage,
+            @RequestPart("fieldCodes") String fieldCodes,
+            @RequestPart("cropCodes") String cropCodes,
+            @RequestPart("staffIds") String staffIds) {
+        try {
+            List<String> fieldCodeList = Arrays.asList(fieldCodes.split(","));
+            List<String> cropCodeList = Arrays.asList(cropCodes.split(","));
+            List<String> staffIdList = Arrays.asList(staffIds.split(","));
+
+            var updatecropDetailsDTO = new CropDetailsDTO();
+            updatecropDetailsDTO.setLogCode(logCode);
+            updatecropDetailsDTO.setLogDetails(logDetails);
+            updatecropDetailsDTO.setObservedImage(AppUtil.toBase64ObservedImage(observedImage));
+            updatecropDetailsDTO.setFieldCodes(fieldCodeList);
+            updatecropDetailsDTO.setCropCodes(cropCodeList);
+            updatecropDetailsDTO.setStaffIds(staffIdList);
+
+            cropDetailsService.updateCropDetails(updatecropDetailsDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (CropDetailsNotFound e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
