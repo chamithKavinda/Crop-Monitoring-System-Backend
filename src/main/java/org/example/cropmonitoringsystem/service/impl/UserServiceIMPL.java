@@ -5,7 +5,9 @@ import org.example.cropmonitoringsystem.customObj.impl.UserErrorResponse;
 import org.example.cropmonitoringsystem.dao.UserDao;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
 import org.example.cropmonitoringsystem.entity.UserEntity;
+import org.example.cropmonitoringsystem.enums.Role;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
 import org.example.cropmonitoringsystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +44,25 @@ public class UserServiceIMPL implements UserService {
         } else {
             return new UserErrorResponse(0, "User not Found");
         }
+    }
+
+    @Override
+    public void updateUser(String email, UserDTO incomeUserDTO) {
+        UserEntity existingUser = userDao.findById(email)
+                .orElseThrow(() -> new UserNotFound("User not found with email: " + email));
+
+        UserEntity updatedUser = new UserEntity();
+        updatedUser.setEmail(incomeUserDTO.getEmail() != null ? incomeUserDTO.getEmail() : existingUser.getEmail());
+        updatedUser.setPassword(incomeUserDTO.getPassword() != null ? incomeUserDTO.getPassword() : existingUser.getPassword());
+
+        if (incomeUserDTO.getRole() != null) {
+            updatedUser.setRole(Role.valueOf(String.valueOf(incomeUserDTO.getRole())));
+        } else {
+            updatedUser.setRole(existingUser.getRole());
+        }
+
+        userDao.delete(existingUser);
+
+        userDao.save(updatedUser);
     }
 }

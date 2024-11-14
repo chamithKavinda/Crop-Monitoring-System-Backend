@@ -1,10 +1,10 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,5 +45,19 @@ public class UserController {
     @GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse getSelectedUser(@PathVariable("email") String email){
         return userService.getSelectedUser(email);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateUser(@PathVariable("email") String email, @RequestBody UserDTO user){
+        try{
+            if (user == null && (email == null || user.equals(""))){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            userService.updateUser(email,user);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (UserNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
