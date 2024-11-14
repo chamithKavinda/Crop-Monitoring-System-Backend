@@ -56,6 +56,25 @@ public class CropDetailsServiceIMPL implements CropDetailsService {
         cropDetailsDao.save(cropDetailsEntity);
     }
 
+    @Override
+    public List<CropDetailsDTO> getAllCropDetails() {
+        List<CropDetailsEntity> getAllCropDetails = cropDetailsDao.findAll();
+        return mapping.convertCropDetailsToDTOList(getAllCropDetails);
+    }
+
+//    @Override
+//    public List<CropDetailDTO<String>> getAllCropDetails() {
+//        List<CropDetail> cropDetails = cropDetailRepository.findAll();
+//        List<CropDetailDTO<String>> cropDetailDTOs = mapper.convertToCropDetailDTOList(cropDetails);
+//        for (CropDetailDTO<String> cropDetailDTO : cropDetailDTOs) {
+//            cropDetails.stream()
+//                    .filter(cd -> cd.getLogCode().equals(cropDetailDTO.getLogCode()))
+//                    .findFirst()
+//                    .ifPresent(cd -> cropDetailDTO.setObservedImage(imageUtil.getImage(cd.getObservedImage())));
+//        }
+//        return cropDetailDTOs;
+//    }
+
     private List<FieldEntity> getFieldsFromCodes(List<String> fieldCodes){
         return fieldDao.findAllById(fieldCodes);
     }

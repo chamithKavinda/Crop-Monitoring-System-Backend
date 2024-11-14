@@ -7,7 +7,9 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Mapping {
@@ -66,9 +68,27 @@ public class Mapping {
     }
 
     //CropDetails and DTO
-    public CropDetailsDTO convertToCropDetailsDTO(CropDetailsEntity cropDetailsEntity) {return modelMapper.map(cropDetailsEntity, CropDetailsDTO.class);}
+    private CropDetailsDTO convertToCropDetailsDTO(CropDetailsEntity entity) {
+        CropDetailsDTO dto = modelMapper.map(entity, CropDetailsDTO.class);
+
+        dto.setFieldCodes(entity.getField() != null
+                ? entity.getField().stream().map(FieldEntity::getFieldCode).collect(Collectors.toList())
+                : Collections.emptyList());
+
+        dto.setCropCodes(entity.getCrop() != null
+                ? entity.getCrop().stream().map(CropEntity::getCropCode).collect(Collectors.toList())
+                : Collections.emptyList());
+
+        dto.setStaffIds(entity.getStaff() != null
+                ? entity.getStaff().stream().map(StaffEntity::getStaffId).collect(Collectors.toList())
+                : Collections.emptyList());
+
+        return dto;
+    }
+
     public CropDetailsEntity convertToCropDetailsEntity(CropDetailsDTO cropDetailsDTO) {return modelMapper.map(cropDetailsDTO, CropDetailsEntity.class);}
     public List<CropDetailsDTO> convertCropDetailsToDTOList(List<CropDetailsEntity> cropDetailsEntities) {
-        return modelMapper.map(cropDetailsEntities, new TypeToken<List<CropDetailsDTO>>(){}.getType());
+        return cropDetailsEntities.stream().map(this::convertToCropDetailsDTO).collect(Collectors.toList());
     }
+
 }
