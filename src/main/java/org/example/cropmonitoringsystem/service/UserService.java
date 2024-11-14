@@ -10,4 +10,5 @@ public interface UserService {
     List<UserDTO> getAllUsers();
     UserResponse getSelectedUser(String email);
     void updateUser(String email, UserDTO userDTO);
+    void deleteUser(String email);
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,18 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (UserNotFound e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/{email}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("email") String email){
+        try{
+            userService.deleteUser(email);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (UserNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

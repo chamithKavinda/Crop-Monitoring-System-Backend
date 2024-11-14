@@ -4,9 +4,11 @@ import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.customObj.impl.UserErrorResponse;
 import org.example.cropmonitoringsystem.dao.UserDao;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
+import org.example.cropmonitoringsystem.entity.EquipmentEntity;
 import org.example.cropmonitoringsystem.entity.UserEntity;
 import org.example.cropmonitoringsystem.enums.Role;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
+import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
 import org.example.cropmonitoringsystem.util.Mapping;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceIMPL implements UserService {
@@ -64,5 +67,15 @@ public class UserServiceIMPL implements UserService {
         userDao.delete(existingUser);
 
         userDao.save(updatedUser);
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        Optional<UserEntity> findId = userDao.findById(email);
+        if (!findId.isPresent()){
+            throw new UserNotFound("User not Found");
+        }else {
+            userDao.deleteById(email);
+        }
     }
 }
