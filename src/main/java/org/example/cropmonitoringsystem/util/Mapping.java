@@ -68,7 +68,7 @@ public class Mapping {
     }
 
     //CropDetails and DTO
-    private CropDetailsDTO convertToCropDetailsDTO(CropDetailsEntity entity) {
+    public CropDetailsDTO convertToCropDetailsDTO(CropDetailsEntity entity) {
         CropDetailsDTO dto = modelMapper.map(entity, CropDetailsDTO.class);
 
         dto.setFieldCodes(entity.getField() != null

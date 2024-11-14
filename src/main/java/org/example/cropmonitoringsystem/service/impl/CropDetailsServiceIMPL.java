@@ -1,6 +1,9 @@
 package org.example.cropmonitoringsystem.service.impl;
 
 
+import org.example.cropmonitoringsystem.customObj.CropDetailsResponse;
+import org.example.cropmonitoringsystem.customObj.impl.CropDetailsErrorResponse;
+import org.example.cropmonitoringsystem.customObj.impl.CropErrorResponse;
 import org.example.cropmonitoringsystem.dao.CropDao;
 import org.example.cropmonitoringsystem.dao.CropDetailsDao;
 import org.example.cropmonitoringsystem.dao.FieldDao;
@@ -62,18 +65,16 @@ public class CropDetailsServiceIMPL implements CropDetailsService {
         return mapping.convertCropDetailsToDTOList(getAllCropDetails);
     }
 
-//    @Override
-//    public List<CropDetailDTO<String>> getAllCropDetails() {
-//        List<CropDetail> cropDetails = cropDetailRepository.findAll();
-//        List<CropDetailDTO<String>> cropDetailDTOs = mapper.convertToCropDetailDTOList(cropDetails);
-//        for (CropDetailDTO<String> cropDetailDTO : cropDetailDTOs) {
-//            cropDetails.stream()
-//                    .filter(cd -> cd.getLogCode().equals(cropDetailDTO.getLogCode()))
-//                    .findFirst()
-//                    .ifPresent(cd -> cropDetailDTO.setObservedImage(imageUtil.getImage(cd.getObservedImage())));
-//        }
-//        return cropDetailDTOs;
-//    }
+    @Override
+    public CropDetailsResponse getSelectedCropDetail(String logCode) {
+        if (cropDetailsDao.existsById(logCode)) {
+            CropDetailsEntity cropDetailsEntityByLogCode = cropDetailsDao.getReferenceById(logCode);
+            return mapping.convertToCropDetailsDTO(cropDetailsEntityByLogCode);
+        } else {
+            return new CropDetailsErrorResponse(0, "Crop Details not Found");
+        }
+    }
+
 
     private List<FieldEntity> getFieldsFromCodes(List<String> fieldCodes){
         return fieldDao.findAllById(fieldCodes);

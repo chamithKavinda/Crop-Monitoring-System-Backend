@@ -1,6 +1,7 @@
 package org.example.cropmonitoringsystem.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cropmonitoringsystem.customObj.CropDetailsResponse;
 import org.example.cropmonitoringsystem.dto.impl.CropDetailsDTO;
 import org.example.cropmonitoringsystem.exception.CropDetailsNotFound;
 import org.example.cropmonitoringsystem.service.CropDetailsService;
@@ -57,4 +58,8 @@ public class CropDetailsController {
         return cropDetailsService.getAllCropDetails();
     }
 
+    @GetMapping(value = "/{logCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CropDetailsResponse getSelectedCropDetail(@PathVariable("logCode") String logCode){
+        return cropDetailsService.getSelectedCropDetail(logCode);
+    }
 }
