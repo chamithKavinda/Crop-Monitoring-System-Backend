@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.CropDetailsResponse;
 import org.example.cropmonitoringsystem.dto.impl.CropDetailsDTO;
 import org.example.cropmonitoringsystem.exception.CropDetailsNotFound;
+import org.example.cropmonitoringsystem.exception.CropNotFound;
 import org.example.cropmonitoringsystem.service.CropDetailsService;
 import org.example.cropmonitoringsystem.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,15 @@ public class CropDetailsController {
         }
     }
 
+    @DeleteMapping(value = "/{logCode}")
+    public ResponseEntity<Void> deleteCropDetails(@PathVariable("logCode") String logCode){
+        try{
+            cropDetailsService.deleteCropDetails(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CropDetailsNotFound e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

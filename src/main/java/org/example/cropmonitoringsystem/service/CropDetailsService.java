@@ -10,4 +10,5 @@ public interface CropDetailsService {
     List<CropDetailsDTO> getAllCropDetails();
     CropDetailsResponse getSelectedCropDetail(String logCode);
     void updateCropDetails(CropDetailsDTO updatecropDetailsDTO);
+    void deleteCropDetails(String logCode);
 }
