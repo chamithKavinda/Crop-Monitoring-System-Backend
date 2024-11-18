@@ -2,6 +2,7 @@ package org.example.cropmonitoringsystem.service;
 
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface UserService {
     UserResponse getSelectedUser(String email);
     void updateUser(String email, UserDTO userDTO);
     void deleteUser(String email);
+    UserDetailsService userDetailsService();
 }

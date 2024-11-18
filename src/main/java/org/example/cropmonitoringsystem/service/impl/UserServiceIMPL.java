@@ -13,6 +13,7 @@ import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
 import org.example.cropmonitoringsystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,5 +78,12 @@ public class UserServiceIMPL implements UserService {
         }else {
             userDao.deleteById(email);
         }
+    }
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return email ->
+                userDao.findByEmail(email)
+                        .orElseThrow(()-> new UserNotFound("User Not found"));
     }
 }
