@@ -42,6 +42,7 @@ public class JWTServiceIMPL implements JWTService {
         final Claims claims = getAllClaims(token);
         return claimResolve.apply(claims);
     }
+
     private String generateToken(Map<String,Object> extractClaims, UserDetails userDetails){
         extractClaims.put("role",userDetails.getAuthorities());
         Date now = new Date();
@@ -52,6 +53,7 @@ public class JWTServiceIMPL implements JWTService {
                 .setExpiration(expire)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
+
     private String refreshToken(Map<String,Object> extractClaims,UserDetails userDetails){
         extractClaims.put("role",userDetails.getAuthorities());
         Date now = new Date();

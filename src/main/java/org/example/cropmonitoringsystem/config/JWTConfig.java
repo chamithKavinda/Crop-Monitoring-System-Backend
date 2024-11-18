@@ -35,6 +35,7 @@ public class JWTConfig extends OncePerRequestFilter {
         //Token received
         jwtToken = initToken.substring(7);
         userEmail = jwtService.extractUsername(jwtToken);
+        System.out.println(userEmail);
         //userEmail validation
         if(StringUtils.isNotEmpty(userEmail) &&
                 SecurityContextHolder.getContext().getAuthentication() == null) {

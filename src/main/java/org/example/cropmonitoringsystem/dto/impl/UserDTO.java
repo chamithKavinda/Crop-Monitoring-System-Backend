@@ -13,5 +13,5 @@ import org.example.cropmonitoringsystem.enums.Role;
 public class UserDTO implements SuperDTO, UserResponse {
     private String email;
     private String password;
-//    private Role role;
+    private Role role;
 }
