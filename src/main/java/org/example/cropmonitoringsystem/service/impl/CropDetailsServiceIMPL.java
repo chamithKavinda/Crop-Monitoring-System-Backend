@@ -77,6 +77,7 @@ public class CropDetailsServiceIMPL implements CropDetailsService {
     }
 
     @Override
+    @Transactional
     public void updateCropDetails(CropDetailsDTO updatecropDetailsDTO) {
         Optional<CropDetailsEntity> existingEntityOptional = cropDetailsDao.findById(updatecropDetailsDTO.getLogCode());
 
@@ -85,6 +86,7 @@ public class CropDetailsServiceIMPL implements CropDetailsService {
 
             existingEntity.setLogDetails(updatecropDetailsDTO.getLogDetails());
             existingEntity.setObservedImage(updatecropDetailsDTO.getObservedImage());
+            existingEntity.setLogDate(updatecropDetailsDTO.getLogDate());
 
 
             if (updatecropDetailsDTO.getFieldCodes() != null) {

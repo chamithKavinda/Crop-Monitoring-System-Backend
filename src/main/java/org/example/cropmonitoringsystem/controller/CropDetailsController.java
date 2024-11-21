@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class CropDetailsController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveCropDetails(
         @RequestPart("logDetails") String logDetails,
+        @RequestPart("logDate") String logDate,
         @RequestPart("observedImage") MultipartFile observedImage,
         @RequestPart("fieldCodes") String fieldCodes,
         @RequestPart("cropCodes") String cropCodes,
@@ -40,6 +42,7 @@ public class CropDetailsController {
 
             cropDetailsDTO.setLogCode(AppUtil.createLogCode());
             cropDetailsDTO.setLogDetails(logDetails);
+            cropDetailsDTO.setLogDate(LocalDate.parse(logDate));
             cropDetailsDTO.setObservedImage(AppUtil.toBase64ObservedImage(observedImage));
             cropDetailsDTO.setFieldCodes(fieldCodeList);
             cropDetailsDTO.setCropCodes(cropCodeList);
@@ -67,6 +70,7 @@ public class CropDetailsController {
     @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCropDetails(
             @PathVariable("logCode") String logCode,
+            @RequestPart("logDate") String logDate,
             @RequestPart("logDetails") String logDetails,
             @RequestPart("observedImage") MultipartFile observedImage,
             @RequestPart("fieldCodes") String fieldCodes,
@@ -79,6 +83,7 @@ public class CropDetailsController {
 
             var updatecropDetailsDTO = new CropDetailsDTO();
             updatecropDetailsDTO.setLogCode(logCode);
+            updatecropDetailsDTO.setLogDate(LocalDate.parse(logDate));
             updatecropDetailsDTO.setLogDetails(logDetails);
             updatecropDetailsDTO.setObservedImage(AppUtil.toBase64ObservedImage(observedImage));
             updatecropDetailsDTO.setFieldCodes(fieldCodeList);
