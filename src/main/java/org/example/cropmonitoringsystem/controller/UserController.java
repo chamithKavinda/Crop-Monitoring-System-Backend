@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
-import org.example.cropmonitoringsystem.exception.EquipmentNotFound;
 import org.example.cropmonitoringsystem.exception.UserNotFound;
 import org.example.cropmonitoringsystem.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private final UserService userService;
+    static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveUser(@RequestBody UserDTO user){
@@ -29,10 +31,13 @@ public class UserController {
         }else {
             try{
                 userService.saveUser(user);
+                logger.info("User saved :" + user);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }catch (DataPersistFailedException e){
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }catch (Exception e){
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -56,8 +61,10 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             userService.updateUser(email,user);
+            logger.info("User Updated :" + user);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (UserNotFound e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -66,10 +73,13 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable("email") String email){
         try{
             userService.deleteUser(email);
+            logger.info("User deleted :" + email);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (UserNotFound e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
