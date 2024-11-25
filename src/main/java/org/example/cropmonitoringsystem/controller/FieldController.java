@@ -6,6 +6,8 @@ import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
 import org.example.cropmonitoringsystem.exception.FieldNotFound;
 import org.example.cropmonitoringsystem.service.FieldService;
 import org.example.cropmonitoringsystem.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import java.util.List;
 public class FieldController {
     @Autowired
     private final FieldService fieldService;
+    static Logger logger = LoggerFactory.getLogger(FieldController.class);
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveField(
         @RequestPart("fieldName") String fieldName,
@@ -48,10 +51,13 @@ public class FieldController {
                 fieldDTO.setStaffIds(staffIdList);
 
                 fieldService.saveField(fieldDTO);
+                logger.info("Field saved :" + fieldDTO);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } catch (FieldNotFound e) {
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } catch (Exception e){
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
@@ -78,12 +84,10 @@ public class FieldController {
             @RequestPart("staffIds") String staffIds
     ) {
         try {
-            // Split staffIds string into list
             List<String> staffIdList = Arrays.asList(staffIds.split(","));
             String updateBase64FieldImage1 = null;
             String updateBase64FieldImage2 = null;
 
-            // Convert field images to Base64 if provided
             if (fieldImage1 != null && !fieldImage1.isEmpty()) {
                 updateBase64FieldImage1 = AppUtil.toBase64FieldImage1(fieldImage1);
             }
@@ -92,7 +96,6 @@ public class FieldController {
                 updateBase64FieldImage2 = AppUtil.toBase64FieldImage2(fieldImage2);
             }
 
-            // Create and populate FieldDTO
             FieldDTO updateFieldDTO = new FieldDTO();
             updateFieldDTO.setFieldCode(fieldCode);
             updateFieldDTO.setFieldName(fieldName);
@@ -108,13 +111,14 @@ public class FieldController {
                 updateFieldDTO.setFieldImage2(updateBase64FieldImage2);
             }
 
-            // Call the service method to update the field
             fieldService.updateField(updateFieldDTO);
-
+            logger.info("Field Updated :" + updateFieldDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (FieldNotFound e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -124,10 +128,13 @@ public class FieldController {
     public ResponseEntity<Void> deleteField(@PathVariable("fieldCode") String fieldCode){
         try{
             fieldService.deleteField(fieldCode);
+            logger.info("Field deleted :" + fieldCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFound e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
