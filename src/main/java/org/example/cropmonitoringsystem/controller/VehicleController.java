@@ -6,6 +6,8 @@ import org.example.cropmonitoringsystem.dto.impl.VehicleDTO;
 import org.example.cropmonitoringsystem.exception.DataPersistFailedException;
 import org.example.cropmonitoringsystem.exception.VehicleNotFound;
 import org.example.cropmonitoringsystem.service.VehicleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,7 @@ import java.util.List;
 public class VehicleController {
     @Autowired
     private final VehicleService vehicleService;
+    static Logger logger = LoggerFactory.getLogger(VehicleController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createVehicle(@RequestBody VehicleDTO vehicle){
@@ -28,10 +31,13 @@ public class VehicleController {
         }else {
             try {
                 vehicleService.saveVehicle(vehicle);
+                logger.info("Vehicle saved :" + vehicle);
                 return new ResponseEntity<>(HttpStatus.CREATED);
             }catch (DataPersistFailedException e){
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }catch (Exception e){
+                logger.error(e.getMessage());
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -54,8 +60,10 @@ public class VehicleController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             vehicleService.updateVehicle(vehicleCode,vehicle);
+            logger.info("Vehicle Updated :" + vehicle);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (VehicleNotFound e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -63,10 +71,13 @@ public class VehicleController {
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode){
         try{
             vehicleService.deleteVehicle(vehicleCode);
+            logger.info("Vehicle deleted :" + vehicleCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (VehicleNotFound e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
