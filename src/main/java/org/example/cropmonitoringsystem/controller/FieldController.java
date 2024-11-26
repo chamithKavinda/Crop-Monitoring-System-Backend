@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.FieldResponse;
 import org.example.cropmonitoringsystem.dto.impl.FieldDTO;
@@ -27,7 +28,7 @@ public class FieldController {
     private final FieldService fieldService;
     static Logger logger = LoggerFactory.getLogger(FieldController.class);
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveField(
+    public ResponseEntity<Void> saveField( @Valid
         @RequestPart("fieldName") String fieldName,
         @RequestPart("latitude") String latitude,
         @RequestPart("longitude") String longitude,
