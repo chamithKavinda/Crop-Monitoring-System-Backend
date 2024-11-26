@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.dto.impl.UserDTO;
@@ -25,7 +26,7 @@ public class UserController {
     static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveUser(@RequestBody UserDTO user){
+    public ResponseEntity<Void> saveUser(@Valid @RequestBody UserDTO user){
         if(user == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
