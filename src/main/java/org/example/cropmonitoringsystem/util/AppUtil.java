@@ -14,6 +14,7 @@ public class AppUtil {
     private static int fieldCounter = 0;
     private static int staffCounter = 0;
     private static int logCounter = 0;
+
     public static synchronized String createVehicleCode(){
         vehicleCounter++;
         return String.format("V%04d", vehicleCounter);
