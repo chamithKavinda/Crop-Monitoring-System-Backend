@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.StaffResponse;
 import org.example.cropmonitoringsystem.dto.impl.StaffDTO;
@@ -25,7 +26,7 @@ public class StaffController {
     static Logger logger = LoggerFactory.getLogger(StaffController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staff){
+    public ResponseEntity<Void> saveStaff(@Valid @RequestBody StaffDTO staff){
         if (staff == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
