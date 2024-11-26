@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.CropResponse;
 import org.example.cropmonitoringsystem.dto.impl.CropDTO;
@@ -27,7 +28,7 @@ public class CropController {
     static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveCrop(
+    public ResponseEntity<Void> saveCrop(@Valid
             @RequestPart("cropCommonName") String cropCommonName,
             @RequestPart("cropScientificName") String cropScientificName,
             @RequestPart("cropImage")MultipartFile cropImage,
