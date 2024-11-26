@@ -1,6 +1,7 @@
 
 package org.example.cropmonitoringsystem.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.EquipmentResponse;
 import org.example.cropmonitoringsystem.dto.impl.EquipmentDTO;
@@ -26,7 +27,7 @@ public class EquipmentController {
     static Logger logger = LoggerFactory.getLogger(EquipmentController.class);
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createEquipment(@RequestBody EquipmentDTO equipment){
+    public ResponseEntity<Void> createEquipment(@Valid @RequestBody EquipmentDTO equipment){
         if (equipment == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }else {
