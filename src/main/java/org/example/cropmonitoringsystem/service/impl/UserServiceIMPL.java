@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.UserResponse;
 import org.example.cropmonitoringsystem.customObj.impl.UserErrorResponse;
 import org.example.cropmonitoringsystem.dao.UserDao;
@@ -14,20 +15,25 @@ import org.example.cropmonitoringsystem.service.UserService;
 import org.example.cropmonitoringsystem.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceIMPL implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
     private Mapping mapping;
+
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void saveUser(UserDTO userDTO) {
         var userEntity = mapping.convertToUserEntity(userDTO);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         var savedUser = userDao.save(userEntity);
         if (savedUser == null){
             throw new DataPersistFailedException("Cannot Save User");
