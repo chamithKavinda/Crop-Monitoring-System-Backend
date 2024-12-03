@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.dto.impl;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.example.cropmonitoringsystem.customObj.FieldResponse;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 public class FieldDTO implements SuperDTO, FieldResponse {
 
+    @Id
     private String fieldCode;
 
     @NotBlank(message = "Field name cannot be blank")

@@ -23,6 +23,7 @@ import java.util.List;
 @RequestMapping("api/v1/vehicles")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin("*")
 public class VehicleController {
     @Autowired
     private final VehicleService vehicleService;

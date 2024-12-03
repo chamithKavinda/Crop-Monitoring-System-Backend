@@ -1,7 +1,7 @@
 package org.example.cropmonitoringsystem.dto.impl;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.example.cropmonitoringsystem.dto.SuperDTO;
 @NoArgsConstructor
 @Data
 public class EquipmentDTO implements SuperDTO, EquipmentResponse {
-
+    @Id
     private String equipmentId;
 
     @NotBlank(message = "Equipment name cannot be blank")

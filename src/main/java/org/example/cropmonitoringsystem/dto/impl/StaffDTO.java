@@ -1,5 +1,6 @@
 package org.example.cropmonitoringsystem.dto.impl;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class StaffDTO implements SuperDTO, StaffResponse {
+    @Id
     private String staffId;
 
     @NotBlank(message = "First name cannot be blank")
