@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.cropmonitoringsystem.enums.Designation;
 import org.example.cropmonitoringsystem.enums.Gender;
 import org.example.cropmonitoringsystem.enums.Role;
 
@@ -21,8 +20,7 @@ public class StaffEntity implements SuperEntity{
     private String staffId;
     private String firstName;
     private String lastName;
-    @Enumerated(EnumType.STRING)
-    private Designation designation;
+    private String designation;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private LocalDate joinedDate;

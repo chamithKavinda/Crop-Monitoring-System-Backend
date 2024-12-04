@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.cropmonitoringsystem.customObj.StaffResponse;
 import org.example.cropmonitoringsystem.dto.SuperDTO;
-import org.example.cropmonitoringsystem.enums.Designation;
 import org.example.cropmonitoringsystem.enums.Gender;
 import org.example.cropmonitoringsystem.enums.Role;
 
@@ -29,7 +28,7 @@ public class StaffDTO implements SuperDTO, StaffResponse {
     private String lastName;
 
     @NotNull(message = "Designation cannot be null")
-    private Designation designation;
+    private String designation;
 
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
