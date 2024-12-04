@@ -75,12 +75,12 @@ public class CropController {
     @PatchMapping(value = "/{cropCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(
             @PathVariable("cropCode") String cropCode,
-            @RequestPart("updateCropCommonName") String updateCropCommonName,
-            @RequestPart("updateCropScientificName") String updateCropScientificName,
-            @RequestPart(value = "updateCropImage", required = false) MultipartFile updateCropImage,
-            @RequestPart("updateCategory") String updateCategory,
-            @RequestPart("updateCropSeason") String updateCropSeason,
-            @RequestPart("updateFieldCode") String updateFieldCode
+            @RequestPart("cropCommonName") String updateCropCommonName,
+            @RequestPart("cropScientificName") String updateCropScientificName,
+            @RequestPart(value = "cropImage", required = false) MultipartFile updateCropImage,
+            @RequestPart("category") String updateCategory,
+            @RequestPart("cropSeason") String updateCropSeason,
+            @RequestPart("filedCode") String updateFieldCode
     ) {
         try {
             String updateBase64CropImage = null;
