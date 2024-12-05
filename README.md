@@ -4,7 +4,7 @@ This repository contains the backend API for the **Green Shadow Farm Management 
 
 ---
 
-![Screenshot 2024-12-05 103208](https://github.com/user-attachments/assets/3335c188-e027-44c4-883a-b366b8c45ce0)
+![Screenshot 2024-12-05 103208](https://github.com/user-attachments/assets/a848d74b-512e-4716-b580-d8d85a2595ad)
 
 ---
 
