@@ -64,7 +64,7 @@ This repository contains the backend API for the **Green Shadow Farm Management 
 
 ## Project Structure
 
-![Screenshot 2024-12-05 103946](https://github.com/user-attachments/assets/48f419ac-25cf-4b36-aaad-43fd9f0d2736)
+![Screenshot 2024-12-05 103946](https://github.com/user-attachments/assets/4626adab-0662-4c30-b2c0-571cef6cb263)
 
 ---
 
