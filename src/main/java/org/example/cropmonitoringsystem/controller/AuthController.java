@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthenticationService authenticationService;
     static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @PostMapping(value = "signin")
     public ResponseEntity<JWTResponse> signIn(@RequestBody SignIn signIn) {
         logger.info("Sign-in successful for email: {}", signIn.getEmail());

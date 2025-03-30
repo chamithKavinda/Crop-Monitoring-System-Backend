@@ -43,7 +43,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    //Password encoder
 
     //Auth provider
     @Bean

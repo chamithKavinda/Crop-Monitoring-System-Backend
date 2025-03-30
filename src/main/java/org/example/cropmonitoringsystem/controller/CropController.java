@@ -29,6 +29,8 @@ import java.util.List;
 public class CropController {
     @Autowired
     private final CropService cropService;
+
+    //preflight method
     static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
